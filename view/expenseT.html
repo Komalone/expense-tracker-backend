@@ -3,46 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Expenses</title>
+    <title>Sign In</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<link href="/signUp.css" rel="stylesheet" />
 </head>
 <body>
-    
-        <button onclick="document.getElementById('id01').style.display='block'">Sign Up</button>
+  <div>
+  <img src="stock-photo-black-calculator-with-pen-and-copy-space-technology-and-financi.jpg" alt="expenses"  height="620px" />
+  
+  <div class="container">
+    <input type="checkbox" id="check">
+    <div class="login form">
+      <header>Login</header>
+      <form action="#">
+        <input type="text" placeholder="Enter your email">
+        <input type="password" placeholder="Enter your password">
+        <a href="#">Forgot password?</a>
+        <input type="button" class="button" value="Login">
+      </form>
+      <div class="signup">
+        <span class="signup">Don't have an account?
+         <label for="check">Signup</label>
+        </span>
+      </div>
+    </div>
+    <div class="registration form">
+      <header>Signup</header>
+      <form action="#" method="post" onsubmit="Registration(event)">
+        <input type="text" id="username" placeholder="Enter User Name">
+        <input type="email" id="mail" placeholder="Enter your email">
+        <input type="password" id="pwd" placeholder="Create a password">
+        <input type="password" id="pwd1" placeholder="Confirm your password">
+        <button type="submit"> Sign Up </button>
+      </form>
+      <div class="signup">
+        <span class="signup">Already have an account?
+         <label for="check">Login</label>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
 
-        <div id="id01" class="modal">
-            <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal"></span>
-            <form class="modal-content" action="/action_page.php">
-              <div class="container">
-                <h1>Sign Up</h1>
-                <p>Please fill in this form to create an account.</p>
-                <hr>
-                <label for="username"><b>User Name</b></label>
-                <input type="text" placeholder="Name" name="name" required>
-
-                <label for="email"><b>Email</b></label>
-                <input type="email" placeholder="Enter Email" name="email" required>
-          
-                <label for="psw"><b>Password</b></label>
-                <input type="password" placeholder="Enter Password" name="psw" required>
-          
-                <div class="clearfix">
-                  <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
-                  <button type="submit" class="signup">Sign Up</button>
-                </div>
-              </div>
-            </form>
-          </div>
-    
-    <script>
-        var modal = document.getElementById('id01');
-        
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
+  <script>
+    async function Registration(event){
+      event.preventDefault();
+      
+      const name= document.getElementById('username').value;
+      const email= document.getElementById('mail').value;
+      const password= document.getElementById('pwd').value;
+      const pwd= document.getElementById('pwd1').value;
+      if(password === pwd){
+        const obj={
+          name, email, password
         }
-        </script>
+        try{
+          const response= await axios.post('http://localhost:3000/user', obj)
+          const data= response.data
+          if(response.status === 201){
+            window.location.href='/'
+          }
+        }catch(err){
+          console.log(err);
+        }
+      }
+
+    }
+  </script>
 </body>
 </html>
