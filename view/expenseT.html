@@ -17,8 +17,8 @@
     <div class="login form">
       <header>Login</header>
       <form action="#" method="post" onsubmit="login(event)">
-        <input type="text" placeholder="Enter your email">
-        <input type="password" placeholder="Enter your password">
+        <input type="email" id="email" placeholder="Enter your email">
+        <input type="password" id="password" placeholder="Enter your password">
         <div>
           <button type="submit"> LogIn </button>
         </div>
@@ -61,7 +61,7 @@
           name, email, password
         }
         try{
-          const response= await axios.post('http://localhost:3000/user', obj)
+          const response= await axios.post('http://localhost:3000/user/', obj)
           const data= response.data
           if(response.status === 201){
             window.location.href='/'
@@ -75,14 +75,16 @@
     async function login(event){
       event.preventDefault();
       
-      const email= document.getElementById('mail').value;
-      const password= document.getElementById('pwd').value;
+      const email= document.getElementById('email').value;
+      const password= document.getElementById('password').value;
         const obj={
            email, password
         }
+        console.log(obj)
         try{
-          const response= await axios.post('http://localhost:3000/user', obj)
-          const data= response.data
+          const response= await axios.post('http://localhost:3000/user/', obj)
+          //const data= response.data
+          console.log("login", data)
           if(response.status === 201){
             window.location.href='/'
           }
