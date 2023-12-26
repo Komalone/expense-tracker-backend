@@ -4,7 +4,6 @@ const bodyParser= require('body-parser');
 const app= express();
 const cors= require('cors');
 const sequelize= require('./util/signUp')
-
 const routeSignUp= require('./routes/signUp');
 
 app.use(bodyParser.urlencoded({extended: false}));

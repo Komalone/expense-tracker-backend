@@ -64,15 +64,17 @@ body{
 .form a:hover{
   text-decoration: underline;
 }
-.form input.button{
+button{
   color: #fff;
   background: #2a8171;
   font-size: 1.2rem;
   font-weight: 500;
   letter-spacing: 1px;
-  margin-top: 1.7rem;
-  cursor: pointer;
   transition: 0.4s;
+  padding: 5px 15px;
+  border-radius: 10px;
+  position: relative;
+  left: 32%;
 }
 .form input.button:hover{
   background: #006653;
