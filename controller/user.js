@@ -1,5 +1,7 @@
 const User= require('../models/user');
 const bcrypt= require('bcrypt');
+const jwt=require('jsonwebtoken');
+const { use } = require('../routes/signUp');
 
 const isStringInvalid=(string)=>{
     if(string == undefined || string.length === 0){
@@ -24,13 +26,17 @@ exports.signUp=async(req, res)=>{
             const data= await User.create({
                 name, email, password:hash
            });
-           res.status(201).json({newUser : data, "message": "user register"});
+           res.status(201).json({ message: "user register"});
         })
         
     }catch(err){
         console.log(err)
     }
 }
+
+function generateToken(id, name){
+    return jwt.sign({userId: id, name: name}, 'hyt76rh4dgjtf')
+} 
 
 exports.login= async(req, res)=>{
     try{
@@ -46,7 +52,11 @@ exports.login= async(req, res)=>{
                     throw new Error('something went wrong')
                 }
                 if(result === true){
-                    return res.status(200).json({success: true, message: "User logged in"})
+                    return res.status(200).json({
+                        success: true, 
+                        message: "User logged in", 
+                        token: generateToken(user[0].id, user[0].name)
+                    })
                 }
                 else{
                     return res.status(400).json({success: false, message: "password is incorrect"})

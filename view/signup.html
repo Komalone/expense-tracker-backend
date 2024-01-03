@@ -16,7 +16,7 @@
     <input type="checkbox" id="check">
     <div class="login form">
       <header>Login</header>
-      <form action="#" method="post" onsubmit="login(event)">
+      <form action="" method="post" onsubmit="login(event)">
         <input type="email" id="email" placeholder="Enter your email">
         <input type="password" id="password" placeholder="Enter your password">
         <div>
@@ -31,7 +31,7 @@
     </div>
     <div class="registration form">
       <header>Signup</header>
-      <form action="#" method="post" onsubmit="Registration(event)">
+      <form action="" method="post" onsubmit="Registration(event)">
         <input type="text" id="username" placeholder="Enter User Name">
         <input type="email" id="mail" placeholder="Enter your email">
         <input type="password" id="pwd" placeholder="Create a password">
@@ -61,14 +61,18 @@
           name, email, password
         }
         try{
-          const response= await axios.post('http://localhost:3000/user/', obj)
-          const data= response.data
-          if(response.status === 201){
-            window.location.href='/'
+          const response= await axios.post('http://localhost:3000/user/signup', obj)
+          //const data= response.data
+          console.log("signup",response.data)
+          
+          if(response.status === 200){
+            window.location.href='/user'
           }
         }catch(err){
           console.log(err);
         }
+      }else if(password !== pwd){
+        alert("password not same");
       }
 
     }
@@ -82,11 +86,12 @@
         }
         console.log(obj)
         try{
-          const response= await axios.post('http://localhost:3000/user/', obj)
+          const response= await axios.post('http://localhost:3000/user/login', obj)
           //const data= response.data
-          console.log("login", data)
+          console.log("login", response.data)
+          localStorage.setItem('token', response.data.token)
           if(response.status === 201){
-            window.location.href='/'
+            window.location.href='/expenses.html'
           }
         }catch(err){
           console.log(err);
