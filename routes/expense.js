@@ -3,8 +3,8 @@ const router=express.Router();
 const bodyParser = require('body-parser')
 const path=require('path')
 
-const Expense= require('../models/expense');
-
+const userAuth= require('../middleware/auth');
+const expController=require('../controller/expense');
 
 router.use(express.json());
 router.use(bodyParser.urlencoded({extended:false}));
@@ -15,8 +15,8 @@ router.get('/', (req, res)=>{
     res.sendFile(path.join(__dirname, '..','view', 'navbar.html'))
 })
 
-router.post('/user/add-expense', );
-router.get('/user/all-expense', );
-router.delete('/user/delete-exp/:id');
+router.post('/user/add-expense', userAuth, expController.postExpense);
+router.get('/user/all-expense',userAuth, expController.getExpense);
+router.delete('/user/delete-exp/:id', userAuth, expController.deleteExpense);
 
 module.exports=router;

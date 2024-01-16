@@ -9,9 +9,6 @@ router.use(bodyParser.urlencoded({extended:false}))
 router.use(express.static(path.join(__dirname,'..','view')))
 router.use(express.static(path.join(__dirname, '..' ,'public')));
 
-router.get('/', (req, res)=>{
-    res.sendFile(path.join(__dirname, '..','view', 'signup.html'))
-})
 
 router.post('/signup', controllerUser.signUp);
 

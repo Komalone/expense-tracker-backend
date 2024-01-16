@@ -17,10 +17,9 @@ body{
   right: 10%;
   transform: translate(0%,-50%);
   max-width: 400px;
-  width: 100%;
-  background: #fff;
-  border-radius: 7px;
-  box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+  background: #ffbaba;
+  border-radius: 20px;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.7);
 }
 .container .registration{
   display: none;
