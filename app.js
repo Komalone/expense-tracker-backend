@@ -10,10 +10,12 @@ const routeSignUp= require('./routes/signUp');
 const expenseRoute= require('./routes/expense');
 const purchaseRoute= require('./routes/purchase');
 const premiumRoute= require('./routes/premium');
+const passwordRoute= require('./routes/forgetpassword')
 
 const Expense=require('./models/expense');
 const User=require('./models/user');
 const Order= require('./models/orders');
+const ForgotPassword= require('./models/forgetpassword');
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname, '..','view'))); 
@@ -26,12 +28,16 @@ app.use(expenseRoute);
 app.use('/user', routeSignUp);
 app.use('/purchase', purchaseRoute);
 app.use('/premium', premiumRoute);
+app.use('/password', passwordRoute);
 
 User.hasMany(Expense);
 Expense.belongsTo(User);
 
 User.hasMany(Order);
 Order.belongsTo(User);
+
+User.hasMany(ForgotPassword);
+ForgotPassword.belongsTo(User);
 
 sequelize.sync({alter: true})
 .then(()=>{
