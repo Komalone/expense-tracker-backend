@@ -308,6 +308,7 @@ document.getElementById('premiumbtn').onclick = async function (e) {
       function LogOut(event){
           event.preventDefault()
           console.log("success")
+          localStorage.removeItem('token');
           window.location.href='/navbar.html'  
       }
   </script>
