@@ -1,6 +1,10 @@
+
 const Expense= require('../models/expense');
 const User= require('../models/user');
 const sequelize= require('../util/signUp');
+
+const AWS= require('aws-sdk');
+const uuidv1= require('uuid/v1')
 
 exports.postExpense= async(req, res)=>{
     console.log('id', req.user)
@@ -66,3 +70,36 @@ return res.status(200).json({ success: true, message: "Deleted Successfuly"})
     }
   }
 
+exports.downloadExp=async(req, res)=>{
+  try{
+    if(!req.user.ispremiumuser){
+      return res.status(401).json({success: false, message: "User is not premium user"})
+    }
+
+    AWS.config.update({
+      accessKeyId: process.env.AWS_ACCESS_KEY_ID ,
+      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+      region: process.env.AWS_REGION
+    })
+
+    const s3= AWS.S3();
+    const bucketName= 'ExpenseTrackerKOM';
+    const objectKey= 'expense' + uuidv1() +'.txt';
+    const data= JSON.stringify(await req.user.getExpense());
+
+    const uploadParam={
+      Bucket: bucketName,
+      Key: objectKey,
+      body: data
+    }
+
+    const uploadResult= await s3.upload(uploadParam).promise();
+
+    const fileUrl= uploadResult.Location;
+
+    res.status(201).json({fileUrl, success: true});
+    
+  }catch(err){
+    res.status(500).json({error: err, success: false, message: "Something went wrong"})
+  }
+}
