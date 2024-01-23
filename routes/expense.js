@@ -19,4 +19,10 @@ router.post('/user/add-expense', userAuth, expController.postExpense);
 router.get('/user/all-expense',userAuth, expController.getExpense);
 router.delete('/user/delete-exp/:id', userAuth, expController.deleteExpense);
 
+router.get('user/detailed-report', userAuth, (req, res)=>{
+    res.sendFile(path.join(__dirname, '..', 'views', 'pagination.html'));
+})
+
+router.get('/download', userAuth, expController.downloadExp)
+
 module.exports=router;
